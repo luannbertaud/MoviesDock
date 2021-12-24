@@ -25,6 +25,19 @@ services:
       - ${MVD_PMS_VOL_FOLDER}/transcode:/transcode
       - ${MVD_PMS_VOL_FOLDER}/data:/data
   
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr-container
+    restart: unless-stopped
+    ports:
+      - 7878:7878
+    environment:
+      TZ: ${MVD_TIMEZONE}
+    volumes:
+      - ${MVD_RDR_VOL_FOLDER}/config:/config
+      - ${MVD_RDR_VOL_FOLDER}/movies:/movies
+      - ${MVD_RDR_VOL_FOLDER}/downloads:/downloads
+
   jackett:
     container_name: jackett-container
     image: linuxserver/jackett
