@@ -24,3 +24,25 @@ services:
       - ${MVD_PMS_VOL_FOLDER}/config:/config
       - ${MVD_PMS_VOL_FOLDER}/transcode:/transcode
       - ${MVD_PMS_VOL_FOLDER}/data:/data
+  
+  jackett:
+    container_name: jackett-container
+    image: linuxserver/jackett
+    restart: unless-stopped
+    ports:
+      - 9117:9117
+    environment:
+      TZ: ${MVD_TIMEZONE}
+      AUTO_UPDATE: "true"
+    volumes:
+      - ${MVD_JKT_VOL_FOLDER}/config:/config
+      - ${MVD_JKT_VOL_FOLDER}/downloads:/downloads
+  
+  flaresolverr:
+    image: flaresolverr/flaresolverr
+    container_name: flaresolverr-container
+    restart: unless-stopped
+    ports:
+      - 8191:8191
+    environment:
+      TZ: ${MVD_TIMEZONE}
