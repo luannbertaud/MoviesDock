@@ -24,7 +24,23 @@ services:
       - ${MVD_PMS_VOL_FOLDER}/config:/config
       - ${MVD_PMS_VOL_FOLDER}/transcode:/transcode
       - ${MVD_PMS_VOL_FOLDER}/data:/data
-  
+
+  deluge:
+    container_name: deluge-container
+    image: linuxserver/deluge
+    restart: unless-stopped
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
+    environment:
+      PUID: 0
+      PGID: 0
+      TZ: ${MVD_TIMEZONE}
+    volumes:
+      - ${MVD_DLG_VOL_FOLDER}/config:/config
+      - ${MVD_DLG_VOL_FOLDER}/downloads:/downloads
+
   radarr:
     image: linuxserver/radarr
     container_name: radarr-container
