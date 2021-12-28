@@ -21,9 +21,9 @@ services:
       ADVERTISE_IP: ${MVD_PMS_SERV_IP}
     hostname: ${MVD_PMS_HOSTNAME}
     volumes:
-      - ${MVD_PMS_VOL_FOLDER}/config:/config
-      - ${MVD_PMS_VOL_FOLDER}/transcode:/transcode
-      - ${MVD_PMS_VOL_FOLDER}/data:/data
+      - ${MVD_CONFIG_PATH}/plex:/config
+      - ${MVD_MOVIES_PATH}/.transcode:/transcode
+      - ${MVD_MOVIES_PATH}:/movies
 
   deluge:
     container_name: deluge-container
@@ -38,12 +38,12 @@ services:
       PGID: 0
       TZ: ${MVD_TIMEZONE}
     volumes:
-      - ${MVD_DLG_VOL_FOLDER}/config:/config
-      - ${MVD_DLG_VOL_FOLDER}/downloads:/downloads
+      - ${MVD_CONFIG_PATH}/deluge:/config
+      - ${MVD_DOWNLOADS_PATH}:/downloads
 
   radarr:
-    image: linuxserver/radarr
     container_name: radarr-container
+    image: linuxserver/radarr
     restart: unless-stopped
     ports:
       - 7878:7878
@@ -52,9 +52,9 @@ services:
       PGID: 0
       TZ: ${MVD_TIMEZONE}
     volumes:
-      - ${MVD_RDR_VOL_FOLDER}/config:/config
-      - ${MVD_RDR_VOL_FOLDER}/movies:/movies
-      - ${MVD_RDR_VOL_FOLDER}/downloads:/downloads
+      - ${MVD_CONFIG_PATH}/radarr:/config
+      - ${MVD_MOVIES_PATH}:/movies
+      - ${MVD_DOWNLOADS_PATH}:/downloads
 
   jackett:
     container_name: jackett-container
@@ -63,17 +63,14 @@ services:
     ports:
       - 9117:9117
     environment:
-      PUID: 0
-      PGID: 0
       TZ: ${MVD_TIMEZONE}
       AUTO_UPDATE: "true"
     volumes:
-      - ${MVD_JKT_VOL_FOLDER}/config:/config
-      - ${MVD_JKT_VOL_FOLDER}/downloads:/downloads
+      - ${MVD_CONFIG_PATH}/jackett:/config
   
   flaresolverr:
-    image: flaresolverr/flaresolverr
     container_name: flaresolverr-container
+    image: flaresolverr/flaresolverr
     restart: unless-stopped
     ports:
       - 8191:8191
