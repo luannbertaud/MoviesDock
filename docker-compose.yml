@@ -32,6 +32,8 @@ services:
     ports:
       - 7878:7878
     environment:
+      PUID: 0
+      PGID: 0
       TZ: ${MVD_TIMEZONE}
     volumes:
       - ${MVD_RDR_VOL_FOLDER}/config:/config
@@ -45,6 +47,8 @@ services:
     ports:
       - 9117:9117
     environment:
+      PUID: 0
+      PGID: 0
       TZ: ${MVD_TIMEZONE}
       AUTO_UPDATE: "true"
     volumes:
