@@ -55,6 +55,8 @@ services:
       - ${MVD_CONFIG_PATH}/radarr:/config
       - ${MVD_MOVIES_PATH}:/movies
       - ${MVD_DOWNLOADS_PATH}:/downloads
+    extra_hosts:
+      - "localhost:host-gateway"
 
   jackett:
     container_name: jackett-container
@@ -67,6 +69,8 @@ services:
       AUTO_UPDATE: "true"
     volumes:
       - ${MVD_CONFIG_PATH}/jackett:/config
+    extra_hosts:
+      - "localhost:host-gateway"
   
   flaresolverr:
     container_name: flaresolverr-container
