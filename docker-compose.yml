@@ -57,6 +57,8 @@ services:
       - ${MVD_DOWNLOADS_PATH}:/downloads
     extra_hosts:
       - "localhost:host-gateway"
+    depends_on:
+      - "jackett"
 
   jackett:
     container_name: jackett-container
@@ -71,6 +73,8 @@ services:
       - ${MVD_CONFIG_PATH}/jackett:/config
     extra_hosts:
       - "localhost:host-gateway"
+    depends_on:
+      - "flaresolverr"
   
   flaresolverr:
     container_name: flaresolverr-container
